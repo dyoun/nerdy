@@ -9,7 +9,9 @@
   // see if 2 strings are permutations of one another
 	permutationString('dog', 'god');
 	permutationString('listen', 'silent');
+	permutationString('cat', 'tap');
 	permutationString('school master', 'the Classroom');
+	permutationString('Dormitory', 'Dirty    Room');
 
 	//doublyLL();
 
@@ -20,25 +22,45 @@
  */
 function permutationString($string1, $string2) {
 	if (empty($string1) || empty($string2)) return;
-		
+
 	$string1Array = str_split(strtolower($string1));
 	sort($string1Array);
 	$string2Array = str_split(strtolower($string2));
 	sort($string2Array);
-	
-	if (count($string1) != count($string2)) return;
-	
-	for ($i = 0, $length = count($string1Array); $i < $length; $i++) {
-		if ($string1Array[$i] != $string2Array[$i]) {
-			echo "$string1 is not a permutation of $string2 \n";
-			return; 
+
+	//if (count($string1) != count($string2)) return;
+
+	$delta1 = 0; $delta2 = 0; $charCount1 = 0; $charCount2 = 0;
+	$delta1 = wsDeltaString($string1Array);
+	$delta2 = wsDeltaString($string2Array);
+	$charCount1 = count($string1Array) - $delta1;
+	$charCount2 = count($string2Array) - $delta2;
+	if ($charCount1 != $charCount2) return;
+
+	for ($i=0; $i<$charCount1; $i++) {
+		echo $string1Array[$i+$delta1] . "=" . $string2Array[$i+$delta2] . ", ";
+		if ($string1Array[$i+$delta1] != $string2Array[$i+$delta2]) {
+			echo "\nNon-Match! '$string1' is not a permutation of '$string2' \n\n";
+			return;
 		}
-		echo $string1Array[$i] . "=" . $string2Array[$i] . ", ";
 	}
 
-	echo "\nMatch! $string1 is a permutation of $string2\n";
-	//echo print_r($string1Array) . " is a permutation of " . print_r($string2Array) . "\n";
-	return; 		
+	echo "\nMatch! '$string1' is a permutation of '$string2'\n\n";
+	return;
+}
+/**
+ * return position of non whitespace char of a string array
+ */
+function wsDeltaString($string) {
+	$delta = 0;
+	foreach ($string as $char) {
+		if ($char == ' ') {
+			$delta++;
+		} else {
+			//echo $delta . "\b\n";
+			return $delta;
+		}
+	}
 }
 
 /**
@@ -47,7 +69,7 @@ function permutationString($string1, $string2) {
  */
 function uniqueString($string){
 	if (empty($string)) return;
-		
+
 	$stringArray = str_split($string);
 	sort($stringArray);
 	foreach ($stringArray as $char) {
@@ -60,6 +82,10 @@ function uniqueString($string){
 	}
 	print "\n";
 }
+
+/**
+ * linked list eg
+ */
 function doublyLL() {
 	// basic FIFO
 	$dblyList = new SplDoublyLinkedList();

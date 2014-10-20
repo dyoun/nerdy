@@ -23,44 +23,70 @@
 function permutationString($string1, $string2) {
 	if (empty($string1) || empty($string2)) return;
 
+	// lowercase, string to array, and sort
+	/*
 	$string1Array = str_split(strtolower($string1));
 	sort($string1Array);
 	$string2Array = str_split(strtolower($string2));
 	sort($string2Array);
+	*/
+	
+	$str1 = (new Str($string1))->sortToArray();
+	$str2 = (new Str($string2))->sortToArray();
 
-	//if (count($string1) != count($string2)) return;
+	// since whitespace doesn't count, find delta where chars start in array
+	$str1->wsDelta();
+	$str2->wsDelta();	
+	
+	// # of chars have to match to be an anagram
+	if ($str1->charCount != $str2->charCount) return;
 
-	$delta1 = 0; $delta2 = 0; $charCount1 = 0; $charCount2 = 0;
-	$delta1 = wsDeltaString($string1Array);
-	$delta2 = wsDeltaString($string2Array);
-	$charCount1 = count($string1Array) - $delta1;
-	$charCount2 = count($string2Array) - $delta2;
-	if ($charCount1 != $charCount2) return;
-
-	for ($i=0; $i<$charCount1; $i++) {
-		echo $string1Array[$i+$delta1] . "=" . $string2Array[$i+$delta2] . ", ";
-		if ($string1Array[$i+$delta1] != $string2Array[$i+$delta2]) {
-			echo "\nNon-Match! '$string1' is not a permutation of '$string2' \n\n";
+	// iterate and compare chars, if all same we have an anagram
+	for ($i=0; $i<$str1->charCount; $i++) {
+		echo $str1->array[$i+$str1->wsDelta] . "=" . $str2->array[$i+$str2->wsDelta] . ", ";
+		if ($str1->array[$i+$str1->wsDelta] != $str2->array[$i+$str2->wsDelta]) {
+			echo "\nNon-Match! '$str1->orig' is not a permutation of '$str2->orig' \n\n";
 			return;
 		}
 	}
 
-	echo "\nMatch! '$string1' is a permutation of '$string2'\n\n";
+	echo "\nMatch! '$str1->orig' is a permutation of '$str2->orig'\n\n";
 	return;
 }
-/**
- * return position of non whitespace char of a string array
- */
-function wsDeltaString($string) {
-	$delta = 0;
-	foreach ($string as $char) {
-		if ($char == ' ') {
-			$delta++;
-		} else {
-			//echo $delta . "\b\n";
-			return $delta;
-		}
+class Str {
+	public $orig;
+	public $array;
+	public $length;
+	public $wsDelta;
+	public $charCount;
+	
+	public function __construct($orig) {
+		$this->orig = strtolower($orig);
+
+		return $this;
 	}
+	
+	public function sortToArray() {
+		$this->array = str_split($this->orig);
+		$this->length = count($this->array);
+		sort($this->array);
+
+		return $this;
+	}
+	/**
+	 * return position of non whitespace char of a string array
+	 */
+	public function wsDelta() {
+		foreach ($this->array as $char) {
+			if ($char == ' ') {
+				$this->wsDelta++;
+			} else {
+				//echo $delta . "\b\n";
+				$this->charCount = $this->length - $this->wsDelta;
+				return $this;
+			}
+		}
+	}	
 }
 
 /**

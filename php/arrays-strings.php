@@ -3,18 +3,104 @@
 	 * Playing with Standard PHP Library (SPL)
 	 * A doubly linked list example is below
 	 */
+	//doublyLL();
+
+	// test if all characters in a string are unique
 	//$string = 'the quick brown fox jumped over the lazy dog';
-  //uniqueString($string);
+  //uniqueString($string);	
 
   // see if 2 strings are permutations of one another
+	/*
 	permutationString('dog', 'god');
 	permutationString('listen', 'silent');
 	permutationString('cat', 'tap');
 	permutationString('school master', 'the Classroom');
 	permutationString('Dormitory', 'Dirty    Room');
+  */
 
-	//doublyLL();
+	// replace all spaces in a string with %20
+	wsUrlEncode("Mr John Smith    ");
 
+/**
+ * Implement a method to perform basic string compression using the counts of repeated characters.
+ * For example, the string aabcccccaaa would become a2blc5a3. If the "compressed" string would not 
+ * become smaller than the original string, your method should return the original string.
+ */
+
+
+/**
+ * replace all spaces in a string with %20 in place, length of string is known
+ * and there is sufficient space at the end of the string, eg:
+ *   "Mr John Smith    " -> "Mr%20John%20Smith"
+ */
+function wsUrlEncode($string) {
+	// iterate chars until space, replace with %20
+	// have to shift rest of characters down, expensive
+	// whitespace from end / 3 = whitespace in string
+	// @solution start from end of string with an index at end, when character is
+	// encountered start shifting chars to end until space is encountered again
+	// insert %20 until beginning of string is reached
+
+	// instantiate our data struct
+	$wsStr = new wsUrlStr($string);
+	echo "'$string' {$wsStr->length} \n";
+	// iterate from end of string until beginning
+	$index = $wsStr->length;
+	$start = 1;
+	for ($i=$wsStr->length; $i >= 0; $i--) {
+		echo "'" . $wsStr->array[$i] . "', ";
+		// check for char
+		if ($wsStr->array[$i] != ' ') {
+			// start shifting to end
+			echo "Shifting char to end: $index = {$wsStr->array[$i]} \n";
+			$wsStr->array[$index] = $wsStr->array[$i];
+			$start = 0; $index--;
+			$wsStr->prnt(); echo "\n";
+		}
+		// when whitespace, insert %20
+		elseif ($wsStr->array[$i] == ' ' && $start == 0) {
+			echo "Inserting URL encoded whitespace:\n";
+			foreach (array('0','2','%') as $encoded) {
+				echo "$index:$encoded ";
+				$wsStr->array[$index] = $encoded;
+				$index--;
+			}
+			$start = 1;
+			echo "\n" . $wsStr->prnt() . "\n";
+
+		}
+	}
+	//echo print_r($wsStr->array,1) . "\n";
+	$wsStr->prnt();
+}
+class wsUrlStr {
+	public $string;
+	public $length;
+	public $array;
+	
+	public function __construct($string) {
+	  if (empty($string)) return;
+		
+		$this->string = $string;
+		$this->array = str_split($string);
+		$this->length = count($this->array)-1;
+		
+		return $this;
+	}
+	
+	public function encde($i) {
+		
+	}
+	
+	public function prnt() {
+		echo "'";
+		for ($i=0; $i<=$this->length; $i++) {
+			echo $this->array[$i];
+		}
+		echo "'\n";
+	}
+}
+	
 /**
  * see if 2 strings are permutations of one another (anagram)
  * list of anagrams http://wordsmith.org/anagram/hof.html
@@ -23,14 +109,7 @@
 function permutationString($string1, $string2) {
 	if (empty($string1) || empty($string2)) return;
 
-	// lowercase, string to array, and sort
-	/*
-	$string1Array = str_split(strtolower($string1));
-	sort($string1Array);
-	$string2Array = str_split(strtolower($string2));
-	sort($string2Array);
-	*/
-	
+	// lowercase, string to array, and sort	
 	$str1 = (new Str($string1))->sortToArray();
 	$str2 = (new Str($string2))->sortToArray();
 
@@ -42,7 +121,7 @@ function permutationString($string1, $string2) {
 	if ($str1->charCount != $str2->charCount) return;
 
 	// iterate and compare chars, if all same we have an anagram
-	for ($i=0; $i<$str1->charCount; $i++) {
+	for ($i=0; $i<$str1->charCount; $i++) { // loop # of characters
 		echo $str1->array[$i+$str1->wsDelta] . "=" . $str2->array[$i+$str2->wsDelta] . ", ";
 		if ($str1->array[$i+$str1->wsDelta] != $str2->array[$i+$str2->wsDelta]) {
 			echo "\nNon-Match! '$str1->orig' is not a permutation of '$str2->orig' \n\n";
@@ -53,6 +132,9 @@ function permutationString($string1, $string2) {
 	echo "\nMatch! '$str1->orig' is a permutation of '$str2->orig'\n\n";
 	return;
 }
+/**
+ * custom data structure for strings
+ */
 class Str {
 	public $orig;
 	public $array;

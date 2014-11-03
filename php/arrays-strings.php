@@ -88,10 +88,6 @@ class wsUrlStr {
 		return $this;
 	}
 	
-	public function encde($i) {
-		
-	}
-	
 	public function prnt() {
 		echo "'";
 		for ($i=0; $i<=$this->length; $i++) {

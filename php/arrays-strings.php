@@ -37,13 +37,15 @@
  *   "Mr John Smith    " -> "Mr%20John%20Smith"
  */
 function wsUrlEncode($string) {
-	// iterate chars until space, replace with %20
-	// have to shift rest of characters down, expensive
-	// whitespace from end / 3 = whitespace in string
-	// @solution start from end of string with an index at end, when character is
-	// encountered start shifting chars to end until space is encountered again
-	// insert %20 until beginning of string is reached
-
+/**
+ * @notes: whitespace from end / 3 = whitespace in string
+ * @solution1: iterate chars until space, replace with %20
+ * shift rest of characters one position. O(2n) runtime, n = # of spaces to encode.
+ * @optimal: start from end of string with an index at end, when character is
+ * encountered start shifting chars to end until space is encountered again
+ * insert %20 until beginning of string is reached. O(n) runtime, n = # of string chars.
+ */
+	
 	// instantiate our data struct
 	$wsStr = new wsUrlStr($string);
 	echo "'$string' {$wsStr->length} \n";

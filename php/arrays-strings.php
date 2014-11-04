@@ -2,15 +2,17 @@
 	/**
 	 * Playing with Standard PHP Library (SPL)
 	 * A doubly linked list example is below
-	 */
-	//doublyLL();
+	doublyLL();
+	*/
 
-	// test if all characters in a string are unique
-	//$string = 'the quick brown fox jumped over the lazy dog';
-  //uniqueString($string);	
+	/* test if all characters in a string are unique
+	
+	$string = 'the quick brown fox jumped over the lazy dog';
+  uniqueString($string);
+	*/
 
-  // see if 2 strings are permutations of one another
-	/*
+  /* see if 2 strings are permutations of one another
+	
 	permutationString('dog', 'god');
 	permutationString('listen', 'silent');
 	permutationString('cat', 'tap');
@@ -18,8 +20,9 @@
 	permutationString('Dormitory', 'Dirty    Room');
   */
 
-	// replace all spaces in a string with %20
+	/** replace all spaces in a string with %20 */
 	wsUrlEncode("Mr John Smith    ");
+	
 
 /**
  * Implement a method to perform basic string compression using the counts of repeated characters.
@@ -51,8 +54,8 @@ function wsUrlEncode($string) {
 		echo "'" . $wsStr->array[$i] . "', ";
 		// check for char
 		if ($wsStr->array[$i] != ' ') {
-			// start shifting to end
-			echo "Shifting char to end: $index = {$wsStr->array[$i]} \n";
+			// start shifting to end index
+			echo "Shifting char position: {$wsStr->array[$i]}($index)\n";
 			$wsStr->array[$index] = $wsStr->array[$i];
 			$start = 0; $index--;
 			$wsStr->prnt(); echo "\n";
@@ -66,12 +69,13 @@ function wsUrlEncode($string) {
 				$index--;
 			}
 			$start = 1;
-			echo "\n" . $wsStr->prnt() . "\n";
+			echo "\n" . $wsStr->prnt();
 
 		}
 	}
-	//echo print_r($wsStr->array,1) . "\n";
+	echo 'Final String:';
 	$wsStr->prnt();
+	echo "\n";
 }
 class wsUrlStr {
 	public $string;
@@ -87,13 +91,13 @@ class wsUrlStr {
 		
 		return $this;
 	}
-	
+	// print array char by char
 	public function prnt() {
 		echo "'";
 		for ($i=0; $i<=$this->length; $i++) {
 			echo $this->array[$i];
 		}
-		echo "'\n";
+		echo "'";
 	}
 }
 	

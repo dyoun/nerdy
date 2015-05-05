@@ -1,7 +1,7 @@
 <?php
 
 $tree = new BinaryTree();
-$tree->insert(3)->insert(4)->insert(2)->insert(5)->insert(1);
+$tree->insert(23)->insert(24)->insert(22)->insert(25)->insert(21);
 print_r($tree);
 // echo "In-Order\n";
 // $tree->inOrder();
@@ -9,8 +9,12 @@ print_r($tree);
 // $tree->preOrder();
 // echo "Post-Order\n";
 // $tree->postOrder();
-echo "Level-Order\n";
-$tree->levelOrder();
+// echo "Level-Order\n";
+// $tree->levelOrder();
+
+// traverse biggest to smallest
+$tree->findDescK(1);
+
 /**
  * http://www.sitepoint.com/data-structures-2/
  */
@@ -28,6 +32,8 @@ class BinaryNode {
 
 class BinaryTree {
   public $root;
+  public $count;
+  public $largest = array();
 
   function __construct() {
     $this->root = null;
@@ -106,25 +112,43 @@ class BinaryTree {
   }
   /**
    * basic logic
-   *  queue node
+   *  queue root node
    *  while queue not empty
    *  queue left node
    *  queue right node
    */
   public function traverseLevelOrder(&$subtree) {
     $q = new SplQueue();
-    $q->push($subtree);
+    $q->enqueue($subtree);
 
     while (!$q->isEmpty()) {
       $node = $q->dequeue();
       echo $node->data . "\n";
 
       if ($node->left != null) {
-        $q->queue($node->left);
+        $q->enqueue($node->left);
       }
       if ($node->right != null) {
-        $q->queue($node->right);
+        $q->enqueue($node->right);
       }
     }
   }
+
+  public function findDescK($k) {
+    // start at root node
+    echo "Find largest ($k) descending element\n";
+    $this->traverseDesc($this->root, $k);
+    $kthOfi = count($this->largest) - (count($this->largest) - ($k-1));
+    echo "Kth Largest is: " . $this->largest[$kthOfi] . "\n";
+    echo "Tree: " . print_r($this->largest,1);
+  }
+  // traversing; right, root, left, should produce a desc list
+  public function traverseDesc($node, $k) {
+    if ($node === null) return;
+
+    $this->traverseDesc($node->right, $k);
+    $this->largest[] = $node->data;
+    $this->traverseDesc($node->left, $k);
+  }
 }
+

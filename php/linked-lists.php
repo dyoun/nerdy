@@ -1,15 +1,19 @@
 <?php
+
 /**
  * Write code to remove duplicates from an unsorted linked list.
  * FOLLOW UP
  * How would you solve this problem if a temporary buffer is not allowed?
  */
 
+	$items = array(2, 0, 1, 2, 3, 4);
+	//dupe_list($items);
+
 // iterate list and use a lookup table to keep track of dupes
 function dupe_list($items) {
 	$dupe_list = new SplDoublyLinkedList();
 	$dupe_lookup = array();
-		
+
 	foreach ($items as $item) {
 		$dupe_list->push($item);
 	}
@@ -24,7 +28,7 @@ function dupe_list($items) {
 			$dupe_lookup[$dupe_list->current()] = $dupe_list->key();
 		}
 	}
-	
+
 	foreach ($dupe_lookup as $key => $value) {
 		echo "remove element at index: " . $value;
 		$dupe_list->offsetUnset($value);
@@ -33,8 +37,6 @@ function dupe_list($items) {
 	for ($dupe_list->rewind(); $dupe_list->valid(); $dupe_list->next()) {
 	  echo $dupe_list->current()."\n";
 	}
-	
+
 }
 
-	$items = array(2, 0, 1, 2, 3, 4);
-	dupe_list($items);

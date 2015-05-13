@@ -15,19 +15,22 @@ print_r($list);
 echo "\n";
 
 class Node {
-  public $data = null;
-  public $next = null;
+  public $data;
+  public $next;
 
   function __construct($data = null) {
     $this->data = $data;
+    $this->next = null;
   }
 }
 
 class Linkedlist {
-  public $head = null;
-  public $count = 0;
+  public $head;
+  public $count;
 
   function __construct($data = null) {
+    $this->head = null;
+    $this->count = 0;
     $this->prepend($data);
   }
   // add/replace to head of list

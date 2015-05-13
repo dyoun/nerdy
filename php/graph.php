@@ -1,4 +1,8 @@
 <?php
+/**
+ * BFS traversal of an undirected graph to find the shortest path between
+ * 2 vertexes
+ */
 // http://www.sitepoint.com/data-structures-4/
 // adjacency list
 $graph = array(
@@ -46,6 +50,15 @@ class Graph
 
   // find least number of hops (edges) between 2 nodes
   // (vertices)
+  /**
+   * algorithm uses a queue data structure to store intermediate results as it traverses the graph, as follows:
+   * 1. Enqueue the root node
+   * 2. Dequeue a node and examine it
+   *   2.1 If the element is found in this node, quit search and return a result.
+   *   2.2 Otherwise enqueue any child nodes that have not yet been discovered.
+   * 3. If the queue is empty, every node on the graph has been examined – quit the search and return "not found".
+   * 4. If the queue is not empty, repeat from Step 2.
+   */
   public function breadthFirstSearch($origin, $destination) {
     // mark all nodes as unvisited
     foreach ($this->graph as $vertex => $adj) {

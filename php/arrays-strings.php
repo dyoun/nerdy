@@ -6,13 +6,13 @@
 	*/
 
 	/* test if all characters in a string are unique
-	
+
 	$string = 'the quick brown fox jumped over the lazy dog';
   uniqueString($string);
 	*/
 
   /* see if 2 strings are permutations of one another
-	
+
 	permutationString('dog', 'god');
 	permutationString('listen', 'silent');
 	permutationString('cat', 'tap');
@@ -22,11 +22,11 @@
 
 	/** replace all spaces in a string with %20 */
 	wsUrlEncode("Mr John Smith    ");
-	
+
 
 /**
  * Implement a method to perform basic string compression using the counts of repeated characters.
- * For example, the string aabcccccaaa would become a2blc5a3. If the "compressed" string would not 
+ * For example, the string aabcccccaaa would become a2blc5a3. If the "compressed" string would not
  * become smaller than the original string, your method should return the original string.
  */
 
@@ -45,7 +45,7 @@ function wsUrlEncode($string) {
  * encountered start shifting chars to end until space is encountered again
  * insert %20 until beginning of string is reached. O(n) runtime, n = # of string chars.
  */
-	
+
 	// instantiate our data struct
 	$wsStr = new wsUrlStr($string);
 	echo "'$string' {$wsStr->length} \n";
@@ -83,14 +83,14 @@ class wsUrlStr {
 	public $string;
 	public $length;
 	public $array;
-	
+
 	public function __construct($string) {
 	  if (empty($string)) return;
-		
+
 		$this->string = $string;
 		$this->array = str_split($string);
 		$this->length = count($this->array)-1;
-		
+
 		return $this;
 	}
 	// print array char by char
@@ -102,7 +102,7 @@ class wsUrlStr {
 		echo "'";
 	}
 }
-	
+
 /**
  * see if 2 strings are permutations of one another (anagram)
  * list of anagrams http://wordsmith.org/anagram/hof.html
@@ -111,14 +111,16 @@ class wsUrlStr {
 function permutationString($string1, $string2) {
 	if (empty($string1) || empty($string2)) return;
 
-	// lowercase, string to array, and sort	
-	$str1 = (new Str($string1))->sortToArray();
-	$str2 = (new Str($string2))->sortToArray();
+	// lowercase, string to array, and sort
+	$str1 = new Str($string1);
+	$str1->sortToArray();
+	$str2 = new Str($string2);
+	$str2->sortToArray();
 
 	// since whitespace doesn't count, find delta where chars start in array
 	$str1->wsDelta();
-	$str2->wsDelta();	
-	
+	$str2->wsDelta();
+
 	// # of chars have to match to be an anagram
 	if ($str1->charCount != $str2->charCount) return;
 
@@ -143,13 +145,13 @@ class Str {
 	public $length;
 	public $wsDelta;
 	public $charCount;
-	
+
 	public function __construct($orig) {
 		$this->orig = strtolower($orig);
 
 		return $this;
 	}
-	
+
 	public function sortToArray() {
 		$this->array = str_split($this->orig);
 		$this->length = count($this->array);
@@ -170,7 +172,7 @@ class Str {
 				return $this;
 			}
 		}
-	}	
+	}
 }
 
 /**

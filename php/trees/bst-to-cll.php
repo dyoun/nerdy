@@ -1,6 +1,8 @@
 <?php
-// http://codercareer.blogspot.com/2011/09/interview-question-no-1-binary-search.html
-
+/**
+ * convert a binary search tree to a circular linked list
+ * @source http://codercareer.blogspot.com/2011/09/interview-question-no-1-binary-search.html
+ */
 require 'binary-tree.class.php';
 require 'traverse.class.php';
 
@@ -21,29 +23,29 @@ class BSTtoLL extends BinaryTree {
       //echo "head assignment" . print_r($this->head,1) . "\n";
       $this->head = &$this->head->left;
     }
-    //$this->head->left = &$this->tail;
+    $this->head->left = &$this->tail;
   }
+  /**
+   * recurse left tree
+   * set current->left to prev node
+   * !null, set prev->right to current
+   * prev = current
+   * recurse right tree
+   */
   public function convert(&$node, &$prev) {
     if ($node == null) return;
-
     $current = $node;
 
-    if ($current->left != null) {
-      $this->convert($current->left, $prev);
-    }
+    $this->convert($current->left, $prev);
 
     $current->left = $prev;
-
     if ($prev != null) {
       // assigned by value to make it human readable, but should be $current
       $prev->right = $current->data;
     }
-
     $prev = $current;
 
-    if ($current->right != null) {
-      $this->convert($current->right, $prev);
-    }
+    $this->convert($current->right, $prev);
   }
 }
 

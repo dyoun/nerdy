@@ -13,26 +13,26 @@ class BinaryTreeHeight extends BinaryTreeTraverse {
     echo "  ($height) ";
     echo ($height <= 1) ?  "Tree is balanced\n" : "Tree is not balanced\n";
   }
-
-  // balanced binary tree check
-  public function balancedIterative() {
-    echo "Check Balance of Left & Right Subtrees\n";
-    $left = 0; $right = 0;
-
-    $left = $this->heightIterative($this->root->left, null);
-    $right = $this->heightIterative($this->root->right, $left);
-
-    echo "  Left: $left, Right: $right \n";
-    $height = ($left > $right) ? $left-$right : $right-$left;
-    echo "  ($height) ";
-    echo ($height <= 1) ?  "Tree is balanced\n" : "Tree is not balanced\n";
-  }
+  // recursive height calculation
   public function height(&$subtree, &$height) {
     if ($subtree == null) return null;
 
     $this->height($subtree->left, $height);
     $this->height($subtree->right, $height);
     $height++;
+  }
+  // balanced binary tree check
+  public function balancedIterative() {
+    echo "Check Balance of Left & Right Subtrees\n";
+    $left = 0; $right = 0;
+
+    $left = $this->heightIterative($this->root->left);
+    $right = $this->heightIterative($this->root->right);
+
+    echo "  Left: $left, Right: $right \n";
+    $height = ($left > $right) ? $left-$right : $right-$left;
+    echo "  ($height) ";
+    echo ($height <= 1) ?  "Tree is balanced\n" : "Tree is not balanced\n";
   }
   // non-recursive heigh calculation
   public function heightIterative(&$subtree, $height=null) {

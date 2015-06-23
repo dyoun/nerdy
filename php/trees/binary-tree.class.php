@@ -10,8 +10,8 @@ class BinaryNode {
 
   function __construct($data = null) {
     $this->data = $data;
-    $left = null;
-    $right = null;
+    $this->left = null;
+    $this->right = null;
   }
 }
 

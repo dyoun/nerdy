@@ -69,7 +69,7 @@ class BinaryTreeTraverse extends BinaryTree {
     echo "($k) Kth Largest is: " . $this->largest[$kthOfi] . "\n";
     echo "Tree: " . print_r($this->largest,1);
   }
-  // traversing; right, root, left, should produce a desc list
+  // traversing; right, root, left, will produce a desc list
   public function traverseDesc($node, $k) {
     if ($node === null) return;
 
@@ -111,7 +111,7 @@ class BinaryTreeTraverse extends BinaryTree {
     $this->height($subtree->right, $height);
     $height++;
   }
-  // non-recursive heigh calculation
+  // non-recursive BFS height calculation
   public function heightIterative(&$subtree, $height=null) {
     if ($subtree == null) return 0;
 

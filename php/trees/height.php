@@ -6,12 +6,19 @@ require 'height.class.php';
 $tree = new BinaryTreeTraverse();
 $tree->insert(23)->insert(24)->insert(22)->insert(25)->insert(21);
 // check if tree is height balanced
+echo "Recursive\n";
 $tree->balanced();
+print_r($tree->root);
+
 $tree->insert(20);
 $tree->balanced();
+print_r($tree->root);
+
 $tree->insert(19);
 $tree->balanced();
+print_r($tree->root);
 
+echo "Iterative\n";
 $tree->balancedIterative();
 $tree->insert(20);
 $tree->balancedIterative();

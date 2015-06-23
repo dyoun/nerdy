@@ -28,7 +28,7 @@ class BSTtoLL extends BinaryTree {
   /**
    * recurse left tree
    * set current->left to prev node
-   * !null, set prev->right to current
+   * prev !null, set prev->right to current
    * prev = current
    * recurse right tree
    */
@@ -47,12 +47,48 @@ class BSTtoLL extends BinaryTree {
 
     $this->convert($current->right, $prev);
   }
+  /**
+   * BFS order of tree to linked list
+   * https://www.youtube.com/watch?v=WJZtqZJpSlQ
+   * basic algo
+   *  BFS traversal
+   *  set current left to prev
+   *  if not empty, set current right to top
+   *  set prev to current
+   *  set tail to current
+   */
+  public function toLinkedListBFS() {
+    $prev = null;
+
+    if ($this->root == null) return;
+
+    $q = new SplQueue();
+    $q->enqueue($this->root);
+
+    while (!$q->isEmpty()) {
+      $current = $q->dequeue();
+
+      if ($current->left != null) $q->enqueue($current->left);
+      if ($current->right != null) $q->enqueue($current->right);
+
+      $current->left = $prev;
+      if (!$q->isEmpty()) $current->right = $q->top();
+      $prev = $current;
+      $this->tail = $prev;
+    }
+  }
 }
 
 // create a tree
 $tree = new BSTtoLL();
 $tree->insert(4)->insert(6)->insert(2)->insert(7)->insert(5)->insert(3)->insert(1);
 //print_r($tree);
+//$tree->toLinkedList();
+//print_r($tree);
 
-$tree->toLinkedList();
-print_r($tree);
+// create a new tree for BFS ordering
+$treeBFS = new BSTtoLL();
+$treeBFS->insert(4)->insert(6)->insert(2)->insert(7)->insert(5)->insert(3)->insert(1);
+print_r($treeBFS);
+$treeBFS->toLinkedListBFS();
+print_r($treeBFS);

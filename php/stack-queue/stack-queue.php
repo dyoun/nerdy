@@ -9,10 +9,17 @@ $stack->push('0');
 $stack->push('1');
 $stack->push('2');
 
+print_r($stack);
+
+echo "isEmpty? " . $stack->isEmpty() . "\n";
+echo "Top: " . $stack->top() . "\n";
+
 // FILO
+echo "Iterate stack FILO\n";
 foreach($stack as $element) {
-  echo $element . "\n";
+  echo $element . " ";
 }
+echo "\n";
 
 // FIFO
 // bottom-up traversal

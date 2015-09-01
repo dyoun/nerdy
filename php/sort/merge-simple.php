@@ -7,7 +7,7 @@
   */
 
 $array = array( 3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 8, 9, 7, 9, 3, 2, 3, 8, 4 );
-$array = merge_sort( $array );
+$array = merge_sort($array);
 //format as a string and output
 echo "The sorted array is: " . implode(', ', $array ) . "\n";
 
@@ -34,9 +34,11 @@ function merge($array1, $array2) {
   while(!empty($array1) || !empty($array2))
     //one of the arrays is empty, so the last man standing wins...
     if (empty($array1) || empty($array2))
-      $output[] = (empty($array2)) ? array_shift($array1) : array_shift($array2);
+      $output[] = (empty($array2)) ?
+        array_shift($array1) : array_shift($array2);
     else //both arrays still have elements, looks like we have a showdown...
-      $output[] = ( $array1[0] <= $array2[0] ) ? array_shift($array1) : array_shift($array2);
+      $output[] = ( $array1[0] <= $array2[0] ) ?
+        array_shift($array1) : array_shift($array2);
 
   //pass back the output array
   return $output;

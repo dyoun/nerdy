@@ -47,17 +47,24 @@ class BinaryTreeTraverse extends BinaryTree {
   public function traverseLevelOrder(&$subtree) {
     $q = new SplQueue();
     $q->enqueue($subtree);
+    echo $subtree->data . "\n";
 
     while (!$q->isEmpty()) {
       $node = $q->dequeue();
-      echo $node->data . "\n";
+      //echo $node->data;
 
       if ($node->left != null) {
+        echo $node->left->data;
         $q->enqueue($node->left);
       }
       if ($node->right != null) {
         $q->enqueue($node->right);
+        echo $node->right->data;
       }
+      if (empty($prev->right)){
+        echo "\n";
+      }
+      $prev = $node;
     }
   }
   // find k largest element

@@ -38,9 +38,10 @@ class Transform {
 
     for ($layer = 0; $layer < $n/2; ++$layer) {
       $first = $layer;
-      $last = $n -1 - $layer;
+      $last = $n - 1 - $layer;
       for ($i=$first; $i < $last; ++$i) {
         $offset = $i - $first;
+        // save top
         $top = $matrix[$first][$i];
         // left -> top
         $matrix[$first][$i] = $matrix[$last-$offset][$first];

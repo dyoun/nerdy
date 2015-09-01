@@ -7,7 +7,7 @@
  */
 
 	$items = array(2, 0, 1, 2, 3, 4);
-	//dupe_list($items);
+	dupe_list($items);
 
 // iterate list and use a lookup table to keep track of dupes
 function dupe_list($items) {
